@@ -3,7 +3,7 @@ import random
 
 from src.const import (
     PIPE_GAP,
-    PIPE_START_X, C_GOLDEN, WIN_SCORE, BACKGROUND_SPEED, WIN_WIDTH,
+    PIPE_START_X, C_GOLDEN, WIN_SCORE, BACKGROUND_SPEED, WIN_WIDTH, WIN_HEIGHT,
 )
 from src.entities.bone import Bone
 from src.entities.player import Player
@@ -32,12 +32,12 @@ class GamePlay:
 
         self.background1 = pygame.transform.scale(
             self.background1,
-            (576, 1024)
+            (WIN_WIDTH, WIN_HEIGHT)
         )
 
         self.background2 = pygame.transform.scale(
             self.background2,
-            (576, 1024)
+            (WIN_WIDTH, WIN_HEIGHT)
         )
         self.bg_x1 = 0
         self.bg_x2 = WIN_WIDTH
@@ -114,6 +114,14 @@ class GamePlay:
             (20, 20)
         )
 
+    def game_over(self):
+
+        pygame.mixer_music.stop()
+
+        pygame.time.delay(500)
+
+        return "GAME_OVER"
+
 
     def run(self):
         pygame.mixer_music.load(
@@ -154,14 +162,11 @@ class GamePlay:
             # ---------------- Colisões ----------------
 
             if self.player.get_bottom() >= self.floor.get_top():
-                pygame.mixer_music.stop()
-                pygame.time.delay(500)
-                return "GAME_OVER"
+                return self.game_over()
+
 
             if self.player.get_top() <= 0:
-                pygame.mixer_music.stop()
-                pygame.time.delay(800)
-                return "GAME_OVER"
+                return self.game_over()
 
 
             player_rect = self.player.get_rect()
@@ -180,15 +185,11 @@ class GamePlay:
 
             if player_rect.colliderect(
                     self.obstacle_top.get_rect()):
-                pygame.mixer_music.stop()
-                pygame.time.delay(500)
-                return "GAME_OVER"
+                return self.game_over()
 
             if player_rect.colliderect(
                     self.obstacle_bottom.get_rect()):
-                pygame.mixer_music.stop()
-                pygame.time.delay(500)
-                return "GAME_OVER"
+                return self.game_over()
 
             # ---------------- Desenho ----------------
 

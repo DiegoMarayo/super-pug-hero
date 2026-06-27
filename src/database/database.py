@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class Database:
 
     DB_NAME = "super_pug.db"

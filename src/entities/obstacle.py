@@ -27,6 +27,3 @@ class Obstacle(Entity):
 
     def update(self):
         self.x -= PIPE_SPEED
-
-    def reset(self):
-        self.x = 650

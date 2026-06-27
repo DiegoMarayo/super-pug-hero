@@ -3,7 +3,6 @@ import pygame
 from src.const import WIN_WIDTH, PIPE_SPEED
 from src.entities.entity import Entity
 
-
 class Floor(Entity):
 
     def __init__(self):
@@ -27,7 +26,6 @@ class Floor(Entity):
             )
         )
 
-        # Duas cópias do chão
         self.x1 = 0
         self.x2 = self.width
 

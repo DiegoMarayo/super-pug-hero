@@ -4,9 +4,8 @@ from src.const import (
     WIN_WIDTH,
     WIN_HEIGHT,
     C_GOLDEN,
-    C_WHITE, MENU_RETURN_OPTION
+    C_WHITE, GAME_OVER_OPTION
 )
-
 
 class GameOver:
 
@@ -56,13 +55,13 @@ class GameOver:
             )
 
             # Desenha opções
-            for i in range(len(MENU_RETURN_OPTION)):
+            for i in range(len(GAME_OVER_OPTION)):
 
                 if i == option:
 
                     self.draw_text(
                         40,
-                        MENU_RETURN_OPTION[i],
+                        GAME_OVER_OPTION[i],
                         C_GOLDEN,
                         (
                             WIN_WIDTH // 2,
@@ -74,7 +73,7 @@ class GameOver:
 
                     self.draw_text(
                         30,
-                        MENU_RETURN_OPTION[i],
+                        GAME_OVER_OPTION[i],
                         C_WHITE,
                         (
                             WIN_WIDTH // 2,
@@ -96,7 +95,7 @@ class GameOver:
 
                         self.move_sound.play()
 
-                        if option < len(MENU_RETURN_OPTION) - 1:
+                        if option < len(GAME_OVER_OPTION) - 1:
                             option += 1
                         else:
                             option = 0
@@ -108,11 +107,11 @@ class GameOver:
                         if option > 0:
                             option -= 1
                         else:
-                            option = len(MENU_RETURN_OPTION) - 1
+                            option = len(GAME_OVER_OPTION) - 1
 
                     elif event.key == pygame.K_RETURN:
                         self.game_over_sound.stop()
-                        return MENU_RETURN_OPTION[option]
+                        return GAME_OVER_OPTION[option]
 
     def draw_text(
             self,

@@ -42,32 +42,44 @@ class Score:
             22
         )
 
-        start_y = 300
+        # Cabeçalho
+        self.draw_text(24, "RANK", C_GOLDEN, (150, 300))
+        self.draw_text(24, "PLAYER", C_GOLDEN, (290, 300))
+        self.draw_text(24, "BONES", C_GOLDEN, (430, 300))
+
+        start_y = 350
 
         for index, row in enumerate(scores):
 
-            points = row[0]
+            player = row[0]
+            points = row[1]
 
-            text = score_font.render(
+            y = start_y + index * 55
 
-                f"{index + 1:>2}°   {points} BONES",
-
+            # Rank
+            rank = score_font.render(
+                f"{index + 1}º",
                 True,
-
                 C_WHITE
-
             )
 
-
-
-            text_rect=text.get_rect(
-                    center=(
-                        WIN_WIDTH // 2,
-                        start_y + index * 55
-                    )
+            # Nome
+            name = score_font.render(
+                player,
+                True,
+                C_WHITE
             )
 
-            self.window.blit(text, text_rect)
+            # Pontos
+            bones = score_font.render(
+                str(points),
+                True,
+                C_WHITE
+            )
+
+            self.window.blit(rank, (140, y))
+            self.window.blit(name, (250, y))
+            self.window.blit(bones, (410, y))
 
 
 
@@ -132,9 +144,7 @@ class Score:
 
                 if event.type == pygame.KEYDOWN:
 
-                    if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.move_sound.play()
 
-                        if event.key == pygame.K_RETURN:
-                            self.move_sound.play()
-
-                            return SCORE_OPTION[0]
+                        return SCORE_OPTION[0]

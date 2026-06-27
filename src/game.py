@@ -1,11 +1,11 @@
 import pygame
-from pygame.examples.aliens import Score
 
 from src.const import WIN_HEIGHT, WIN_WIDTH, MENU_OPTION
 from src.database.init_db import init_database
 from src.screens.gameover import GameOver
 from src.screens.menu import Menu
 from src.screens.gameplay import GamePlay
+from src.screens.name_input import NameInput
 from src.screens.victory import Victory
 from src.repositories.score_repository import ScoreRepository
 from src.screens.score import Score
@@ -37,9 +37,14 @@ class Game:
                     result = gameplay.run()
 
                     if result == "GAME_OVER":
-                        self.repository.save(gameplay.score)
+
+                        name_input = NameInput(self.window)
+                        player = name_input.run()
+
+                        self.repository.save(player, gameplay.score)
 
                         game_over = GameOver(self.window)
+
                         option = game_over.run()
 
                         if option == "TRY AGAIN":
@@ -48,7 +53,12 @@ class Game:
                             restart = False
 
                     elif result == "VICTORY":
-                        self.repository.save(gameplay.score)
+
+                        name_input = NameInput(self.window)
+
+                        player = name_input.run()
+
+                        self.repository.save(player, gameplay.score)
 
                         victory = Victory(self.window)
 

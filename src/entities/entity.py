@@ -35,3 +35,6 @@ class Entity:
             self.width,
             self.height
         )
+
+    def update(self):
+        pass

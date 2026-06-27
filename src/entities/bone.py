@@ -3,7 +3,6 @@ import pygame
 from src.const import PIPE_SPEED
 from src.entities.entity import Entity
 
-
 class Bone(Entity):
 
     def __init__(self):

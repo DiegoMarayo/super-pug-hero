@@ -11,6 +11,8 @@ def init_database():
         CREATE TABLE IF NOT EXISTS score (
 
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            
+            player TEXT NOT NULL,
 
             points INTEGER NOT NULL,
 

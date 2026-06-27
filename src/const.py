@@ -24,10 +24,15 @@ MENU_OPTION = ('NEW GAME',
                'SCORE',
                'EXIT')
 
-# V
-MENU_RETURN_OPTION = (
+
+GAME_OVER_OPTION = (
+    "TRY AGAIN",
+    "MENU"
+)
+
+VICTORY_OPTION = (
     "PLAY AGAIN",
-    "MAIN MENU"
+    "MENU"
 )
 
 SCORE_OPTION = (

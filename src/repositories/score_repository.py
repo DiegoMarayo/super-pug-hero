@@ -2,7 +2,7 @@ from src.database.database import Database
 
 class ScoreRepository:
 
-    def save(self, points):
+    def save(self, player, points):
 
         conn = Database.connect()
 
@@ -11,11 +11,11 @@ class ScoreRepository:
         cursor.execute(
 
             """
-            INSERT INTO score(points)
-            VALUES(?)
+            INSERT INTO score(player, points)
+            VALUES(?, ?)
             """,
 
-            (points,)
+            (player, points,)
         )
 
         conn.commit()
@@ -48,7 +48,7 @@ class ScoreRepository:
 
         cursor.execute("""
 
-            SELECT points, created_at
+            SELECT player, points
 
             FROM score
 

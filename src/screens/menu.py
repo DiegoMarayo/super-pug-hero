@@ -45,7 +45,6 @@ class Menu:
                             menu_option = 0
                     # Event Up
                     if event.key == pygame.K_UP:
-                        self.move_sound.play()
                         if menu_option > 0:
                             menu_option -= 1
                         else:
