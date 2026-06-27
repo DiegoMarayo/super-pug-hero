@@ -2,7 +2,10 @@ import pygame
 
 from src.const import (
     WIN_WIDTH,
-    WIN_HEIGHT, C_GOLDEN, C_WHITE, FONT_NAME
+    WIN_HEIGHT,
+    C_GOLDEN,
+    C_WHITE,
+    FONT_NAME
 )
 
 
@@ -13,7 +16,7 @@ class NameInput:
         self.window = window
 
         self.surf = pygame.image.load(
-            "./assets/images/score.png"
+            "./assets/images/name_input.png"
         ).convert_alpha()
 
         self.surf = pygame.transform.scale(
@@ -37,8 +40,26 @@ class NameInput:
         self.clock = pygame.time.Clock()
 
         self.cursor_visible = True
-
         self.cursor_timer = 0
+
+        # Fontes (criadas apenas uma vez)
+        self.title_font = pygame.font.SysFont(
+            FONT_NAME,
+            28,
+            bold=True
+        )
+
+        self.input_font = pygame.font.SysFont(
+            FONT_NAME,
+            36,
+            bold=True
+        )
+
+        self.help_font = pygame.font.SysFont(
+            FONT_NAME,
+            22,
+            bold=True
+        )
 
     def draw(self):
 
@@ -47,21 +68,14 @@ class NameInput:
             self.rect
         )
 
-        title_font = pygame.font.SysFont(
-
-            FONT_NAME,
-            28,
-            bold=True
-        )
-
-        input_font = pygame.font.SysFont(
-            FONT_NAME,
-            36,
-            bold=True
-        )
-
-        title = title_font.render(
+        title = self.title_font.render(
             "ENTER YOUR NAME",
+            True,
+            C_GOLDEN
+        )
+
+        sub_title = self.help_font.render(
+            "PRESS ENTER TO CONTINUE",
             True,
             C_GOLDEN
         )
@@ -69,13 +83,20 @@ class NameInput:
         self.window.blit(
             title,
             title.get_rect(
-                center=(WIN_WIDTH // 2, 300)
+                center=(WIN_WIDTH // 2, 250)
+            )
+        )
+
+        self.window.blit(
+            sub_title,
+            sub_title.get_rect(
+                center=(WIN_WIDTH // 2, 510)
             )
         )
 
         cursor = "_" if self.cursor_visible else ""
 
-        name = input_font.render(
+        name = self.input_font.render(
             self.player_name + cursor,
             True,
             C_WHITE
@@ -84,7 +105,7 @@ class NameInput:
         self.window.blit(
             name,
             name.get_rect(
-                center=(WIN_WIDTH // 2, 420)
+                center=(WIN_WIDTH // 2, 380)
             )
         )
 
@@ -123,16 +144,20 @@ class NameInput:
                     # Apaga um caractere
                     elif event.key == pygame.K_BACKSPACE:
 
+                        self.move_sound.play()
+
                         self.player_name = self.player_name[:-1]
 
                     # Digita caracteres
                     else:
 
                         if (
-                                len(self.player_name) < 10
-                                and event.unicode.isprintable()
-                                and event.unicode != ""
+                            len(self.player_name) < 10
+                            and event.unicode.isalnum()
                         ):
+
+                            self.move_sound.play()
+
                             self.player_name += event.unicode.upper()
 
             self.clock.tick(60)
