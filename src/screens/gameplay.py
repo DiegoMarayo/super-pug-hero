@@ -109,10 +109,8 @@ class GamePlay:
             C_GOLDEN
         )
 
-        self.window.blit(
-            text,
-            (20, 20)
-        )
+        self.window.blit(text, (20, 20))
+
 
     def game_over(self):
 
