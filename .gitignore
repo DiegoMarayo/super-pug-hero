@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+venv/
+.env/
+
+# IDE
+.idea/
+.vscode/
+
+# SQLite
+*.db
+*.sqlite3
+
+# OS
+Thumbs.db
+.DS_Store
+
+# DB
+super_pug.db
