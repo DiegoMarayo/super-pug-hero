@@ -4,7 +4,7 @@ from src.const import (
     WIN_WIDTH,
     WIN_HEIGHT,
     C_GOLDEN,
-    C_WHITE, GAME_OVER_OPTION
+    C_WHITE, GAME_OVER_OPTION, FONT_NAME
 )
 
 class GameOver:
@@ -122,7 +122,7 @@ class GameOver:
     ):
 
         font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
+            FONT_NAME,
             size
         )
 

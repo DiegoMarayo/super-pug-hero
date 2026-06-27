@@ -2,7 +2,7 @@ import pygame
 
 from src.const import (
     WIN_WIDTH,
-    WIN_HEIGHT, C_GOLDEN, C_WHITE
+    WIN_HEIGHT, C_GOLDEN, C_WHITE, FONT_NAME
 )
 
 
@@ -48,13 +48,14 @@ class NameInput:
         )
 
         title_font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
+
+            FONT_NAME,
             28,
             bold=True
         )
 
         input_font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
+            FONT_NAME,
             36,
             bold=True
         )

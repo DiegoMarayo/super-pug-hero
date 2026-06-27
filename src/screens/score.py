@@ -3,7 +3,7 @@ import pygame
 from src.const import (
     WIN_WIDTH,
     WIN_HEIGHT,
-    C_WHITE, C_GOLDEN, SCORE_OPTION
+    C_WHITE, C_GOLDEN, SCORE_OPTION, FONT_NAME
 )
 
 
@@ -38,7 +38,7 @@ class Score:
 
 
         score_font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
+            FONT_NAME,
             22
         )
 
@@ -92,7 +92,7 @@ class Score:
     ):
 
         font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
+            FONT_NAME,
             size
         )
 

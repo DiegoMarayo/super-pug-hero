@@ -4,7 +4,7 @@ from src.const import (
     WIN_WIDTH,
     WIN_HEIGHT,
     C_GOLDEN,
-    C_WHITE, VICTORY_OPTION
+    C_WHITE, VICTORY_OPTION, FONT_NAME
 )
 
 
@@ -123,7 +123,7 @@ class Victory:
     ):
 
         font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
+            FONT_NAME,
             size
         )
 

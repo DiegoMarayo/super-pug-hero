@@ -1,5 +1,5 @@
 import pygame
-from src.const import WIN_WIDTH, MENU_OPTION, C_GOLDEN, WIN_HEIGHT, C_WHITE, C_RED
+from src.const import WIN_WIDTH, MENU_OPTION, C_GOLDEN, WIN_HEIGHT, C_WHITE, C_RED, FONT_NAME
 
 
 class Menu:
@@ -54,7 +54,7 @@ class Menu:
 
 
     def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
-        text_font = pygame.font.SysFont("Lucida Sans Typewriter", text_size)
+        text_font = pygame.font.SysFont(FONT_NAME, text_size)
         text_surf = text_font.render(text, True, text_color).convert_alpha()
         text_rect = text_surf.get_rect(center=text_center_pos)
         self.window.blit(text_surf, text_rect)

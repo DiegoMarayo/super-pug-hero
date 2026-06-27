@@ -3,7 +3,8 @@ import random
 
 from src.const import (
     PIPE_GAP,
-    PIPE_START_X, C_GOLDEN, WIN_SCORE, BACKGROUND_SPEED, WIN_WIDTH, WIN_HEIGHT,
+    PIPE_START_X, C_GOLDEN, WIN_SCORE, BACKGROUND_SPEED, WIN_WIDTH, WIN_HEIGHT, GAME_OVER_DELAY, VICTORY_DELAY,
+    FONT_NAME,
 )
 from src.entities.bone import Bone
 from src.entities.player import Player
@@ -20,7 +21,12 @@ class GamePlay:
         self.bone = Bone()
         self.score = 0
         self.bg1_x = 0
-        self.bg2_x = 576
+        self.bg2_x = WIN_WIDTH
+        self.score_font = pygame.font.SysFont(
+            FONT_NAME,
+            36,
+            bold=True
+        )
 
         self.background1 = pygame.image.load(
             "./assets/images/bg1.png"
@@ -68,7 +74,7 @@ class GamePlay:
         if self.bg1_x <= - WIN_WIDTH:
             self.bg1_x = self.bg2_x + WIN_WIDTH
 
-        if self.bg2_x <= -576:
+        if self.bg2_x <= -WIN_WIDTH:
             self.bg2_x = self.bg1_x + WIN_WIDTH
 
     def reset_obstacles(self):
@@ -97,13 +103,7 @@ class GamePlay:
 
     def draw_score(self):
 
-        font = pygame.font.SysFont(
-            "Lucida Sans Typewriter",
-            36,
-            bold=True
-        )
-
-        text = font.render(
+        text = self.score_font.render(
             f"BONES: {self.score}",
             True,
             C_GOLDEN
@@ -116,9 +116,18 @@ class GamePlay:
 
         pygame.mixer_music.stop()
 
-        pygame.time.delay(500)
+        pygame.time.delay(GAME_OVER_DELAY)
 
         return "GAME_OVER"
+
+
+    def victory(self):
+
+        pygame.mixer_music.stop()
+
+        pygame.time.delay(VICTORY_DELAY)
+
+        return "VICTORY"
 
 
     def run(self):
@@ -177,9 +186,7 @@ class GamePlay:
                 self.score += 1
 
             if self.score >= WIN_SCORE:
-                pygame.mixer_music.stop()
-                pygame.time.delay(700)
-                return "VICTORY"
+                return self.victory()
 
             if player_rect.colliderect(
                     self.obstacle_top.get_rect()):
