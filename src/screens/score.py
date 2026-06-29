@@ -1,3 +1,4 @@
+import sys
 import pygame
 
 from src.const import (
@@ -5,6 +6,7 @@ from src.const import (
     WIN_HEIGHT,
     C_WHITE, C_GOLDEN, SCORE_OPTION, FONT_NAME
 )
+from src.utils.assets import Assets
 
 
 class Score:
@@ -14,9 +16,7 @@ class Score:
         self.window = window
         self.repository = repository
 
-        self.surf = pygame.image.load(
-            "./assets/images/score.png"
-        ).convert_alpha()
+        self.surf = Assets.image("score.png")
 
         self.surf = pygame.transform.scale(
             self.surf,
@@ -28,16 +28,12 @@ class Score:
             top=0
         )
 
-        self.move_sound = pygame.mixer.Sound(
-            "./assets/sounds/menu1.mp3"
-        )
-
-        self.move_sound.set_volume(0.5)
+        self.move_sound = Assets.sound("menu1.mp3", 0.5)
 
     def draw_scores(self, scores):
 
 
-        score_font = pygame.font.SysFont(
+        score_font = Assets.font(
             FONT_NAME,
             22
         )
@@ -91,7 +87,7 @@ class Score:
             center
     ):
 
-        font = pygame.font.SysFont(
+        font = Assets.font(
             FONT_NAME,
             size
         )
@@ -100,7 +96,7 @@ class Score:
             text,
             True,
             color
-        ).convert_alpha()
+        )
 
         rect = surf.get_rect(
             center=center
@@ -140,7 +136,7 @@ class Score:
 
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
+                    sys.exit()
 
                 if event.type == pygame.KEYDOWN:
 

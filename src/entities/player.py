@@ -1,25 +1,19 @@
 import pygame
 from src.entities.entity import Entity
+from src.utils.assets import Assets
+
 
 class Player(Entity):
 
     def __init__(self):
 
-        super().__init__(100, 250, 50,50)
+        super().__init__(100, 250, 50, 50)
         self.speed_y = 0
         self.gravity = 0.5
 
-        self.surf_up = pygame.image.load(
-            "./assets/images/pug_up.png"
-        ).convert_alpha()
-
-        self.surf_idle = pygame.image.load(
-            "./assets/images/pug_idle.png"
-        ).convert_alpha()
-
-        self.surf_down = pygame.image.load(
-            "./assets/images/pug_down.png"
-        ).convert_alpha()
+        self.surf_up = Assets.image("pug_up.png")
+        self.surf_idle = Assets.image("pug_idle.png")
+        self.surf_down = Assets.image("pug_down.png")
 
         self.surf_up = pygame.transform.scale(
             self.surf_up,
@@ -38,11 +32,7 @@ class Player(Entity):
 
         # Sprite inicial
         self.surf = self.surf_idle
-        self.fly_sound = pygame.mixer.Sound(
-            "./assets/sounds/menu1.mp3"
-        )
-
-        self.fly_sound.set_volume(0.5)
+        self.fly_sound = Assets.sound("menu1.mp3", 0.5)
 
     def update(self):
 

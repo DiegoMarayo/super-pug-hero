@@ -2,6 +2,8 @@ import pygame
 
 from src.const import PIPE_SPEED
 from src.entities.entity import Entity
+from src.utils.assets import Assets
+
 
 class Bone(Entity):
 
@@ -14,9 +16,7 @@ class Bone(Entity):
             40
         )
 
-        self.surf = pygame.image.load(
-            "./assets/images/bone.png"
-        ).convert_alpha()
+        self.surf = Assets.image("bone.png")
 
         self.surf = pygame.transform.scale(
             self.surf,

@@ -1,11 +1,11 @@
 import pygame
+import sys
 
 from src.const import WIN_HEIGHT, WIN_WIDTH, MENU_OPTION
 from src.database.init_db import init_database
 from src.screens.gameover import GameOver
 from src.screens.menu import Menu
 from src.screens.gameplay import GamePlay
-from src.screens.name_input import NameInput
 from src.screens.victory import Victory
 from src.repositories.score_repository import ScoreRepository
 from src.screens.score import Score
@@ -38,12 +38,11 @@ class Game:
 
                     if result == "GAME_OVER":
 
-                        name_input = NameInput(self.window)
-                        player = name_input.run()
-
-                        self.repository.save(player, gameplay.score)
-
-                        game_over = GameOver(self.window)
+                        game_over = GameOver(
+                            self.window,
+                            self.repository,
+                            gameplay.score
+                        )
 
                         option = game_over.run()
 
@@ -52,22 +51,24 @@ class Game:
                         else:
                             restart = False
 
+
+
                     elif result == "VICTORY":
 
-                        name_input = NameInput(self.window)
-
-                        player = name_input.run()
-
-                        self.repository.save(player, gameplay.score)
-
-                        victory = Victory(self.window)
+                        victory = Victory(
+                            self.window,
+                            self.repository,
+                            gameplay.score
+                        )
 
                         option = victory.run()
 
                         if option == "PLAY AGAIN":
+
                             continue
 
-                        elif option == "MAIN MENU":
+                        else:
+
                             restart = False
 
 
@@ -80,4 +81,4 @@ class Game:
 
             elif option == MENU_OPTION[2]:
                 pygame.quit()
-                quit()
+                sys.exit()

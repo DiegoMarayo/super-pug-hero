@@ -2,6 +2,8 @@ import pygame
 
 from src.const import WIN_WIDTH, PIPE_SPEED
 from src.entities.entity import Entity
+from src.utils.assets import Assets
+
 
 class Floor(Entity):
 
@@ -14,10 +16,8 @@ class Floor(Entity):
             74
         )
 
-        self.surf = pygame.image.load(
-            "./assets/images/floor.png"
-        ).convert_alpha()
-
+        # Sprite
+        self.surf = Assets.image("floor.png")
         self.surf = pygame.transform.scale(
             self.surf,
             (
@@ -26,6 +26,7 @@ class Floor(Entity):
             )
         )
 
+        # Scroll
         self.x1 = 0
         self.x2 = self.width
 

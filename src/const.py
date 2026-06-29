@@ -26,7 +26,7 @@ C_RED = (208, 24, 16)
 # GAME
 # ==========================================================
 
-WIN_SCORE = 20
+WIN_SCORE = 5
 
 GAME_OVER_DELAY = 500
 VICTORY_DELAY = 700

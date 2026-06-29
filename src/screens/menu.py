@@ -1,60 +1,74 @@
+import sys
 import pygame
 from src.const import WIN_WIDTH, MENU_OPTION, C_GOLDEN, WIN_HEIGHT, C_WHITE, C_RED, FONT_NAME
+from src.utils.assets import Assets
 
 
 class Menu:
     def __init__(self, window):
         self.window = window
-        self.surf = pygame.image.load('./assets/images/menu.png')
-        self.surf = pygame.transform.scale(self.surf, (WIN_WIDTH, WIN_HEIGHT))
+        self.surf = Assets.image("menu.png", WIN_WIDTH, WIN_HEIGHT)
         self.rect = self.surf.get_rect(left = 0 , top = 0)
-
-        self.move_sound = pygame.mixer.Sound('./assets/sounds/menu1.mp3')
-        self.move_sound.set_volume(0.5)
+        self.move_sound = Assets.sound("menu1.mp3",0.5)
+        self.info_font = Assets.font(FONT_NAME,26)
+        self.menu_font = Assets.font(FONT_NAME,30)
+        self.menu_selected_font = Assets.font(FONT_NAME,40)
 
     def run(self):
-        menu_option = 0
-        pygame.mixer_music.load('./assets/sounds/menu.mp3')
+        selected_option = 0
+        Assets.music("menu.mp3")
         pygame.mixer_music.play(-1)
 
         while True:
             # Draw Images
             self.window.blit(source=self.surf, dest=self.rect)
-            self.menu_text(26,"PRESS SPACE TO FLY", C_RED ,(WIN_WIDTH / 2, 630))
+            self.draw_text(26,"PRESS SPACE TO FLY", C_RED ,(WIN_WIDTH / 2, 630))
 
             # MENU
-            for i in range(len(MENU_OPTION)):
-                if i == menu_option:
-                    self.menu_text(40, MENU_OPTION[i], C_GOLDEN, ((WIN_WIDTH / 2), 700 + 60 * i))
+            for index, option in enumerate(MENU_OPTION):
+
+                if index == selected_option:
+                    self.draw_text(40,option,C_GOLDEN,(WIN_WIDTH / 2, 700 + 60 * index))
                 else:
-                    self.menu_text(30, MENU_OPTION[i], C_WHITE, ((WIN_WIDTH / 2), 700 + 60 * i))
+                    self.draw_text(30,option,C_WHITE,(WIN_WIDTH / 2, 700 + 60 * index))
             pygame.display.flip()
 
             # Check for all events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    quit()
+                    sys.exit()
+
                 # Event Down
                 if event.type == pygame.KEYDOWN:
-                    self.move_sound.play()
                     if event.key == pygame.K_DOWN:
-                        if menu_option < len(MENU_OPTION) - 1:
-                            menu_option += 1
+                        self.move_sound.play()
+                        if selected_option < len(MENU_OPTION) - 1:
+                            selected_option += 1
                         else:
-                            menu_option = 0
+                            selected_option = 0
                     # Event Up
-                    if event.key == pygame.K_UP:
-                        if menu_option > 0:
-                            menu_option -= 1
+                    elif event.key == pygame.K_UP:
+                        self.move_sound.play()
+                        if selected_option > 0:
+                            selected_option -= 1
                         else:
-                            menu_option = len(MENU_OPTION) - 1
-                    if event.key == pygame.K_RETURN: # Enter
-                        return MENU_OPTION[menu_option]
+                            selected_option = len(MENU_OPTION) - 1
+                    elif event.key == pygame.K_RETURN: # Enter
+                        self.move_sound.play()
+                        return MENU_OPTION[selected_option]
 
+    def draw_text(self, size, text, color, center):
 
-    def menu_text(self, text_size: int, text: str, text_color: tuple, text_center_pos: tuple):
-        text_font = pygame.font.SysFont(FONT_NAME, text_size)
-        text_surf = text_font.render(text, True, text_color).convert_alpha()
-        text_rect = text_surf.get_rect(center=text_center_pos)
-        self.window.blit(text_surf, text_rect)
+        if size == 26:
+            font = self.info_font
+        elif size == 30:
+            font = self.menu_font
+        else:
+            font = self.menu_selected_font
+
+        surf = font.render(text,True,color).convert_alpha()
+
+        rect = surf.get_rect(center=center)
+
+        self.window.blit(surf,rect)

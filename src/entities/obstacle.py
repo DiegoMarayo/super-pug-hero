@@ -1,20 +1,17 @@
-import pygame
-
 from src.const import PIPE_SPEED
 from src.entities.entity import Entity
+from src.utils.assets import Assets
 
 
 class Obstacle(Entity):
 
     def __init__(self, x, y, image):
 
-        # Carrega a imagem temporariamente
-        surf = pygame.image.load(image).convert_alpha()
+        surf = Assets.image(image)
 
         width = surf.get_width()
         height = surf.get_height()
 
-        # Inicializa a Entity
         super().__init__(
             x,
             y,
@@ -22,7 +19,6 @@ class Obstacle(Entity):
             height
         )
 
-        # Agora atribui a imagem
         self.surf = surf
 
     def update(self):

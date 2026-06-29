@@ -2,14 +2,22 @@ import pygame
 import random
 
 from src.const import (
-    PIPE_GAP,
-    PIPE_START_X, C_GOLDEN, WIN_SCORE, BACKGROUND_SPEED, WIN_WIDTH, WIN_HEIGHT, GAME_OVER_DELAY, VICTORY_DELAY,
+    BACKGROUND_SPEED,
+    C_GOLDEN,
     FONT_NAME,
+    GAME_OVER_DELAY,
+    PIPE_GAP,
+    PIPE_START_X,
+    VICTORY_DELAY,
+    WIN_HEIGHT,
+    WIN_SCORE,
+    WIN_WIDTH,
 )
 from src.entities.bone import Bone
 from src.entities.player import Player
 from src.entities.floor import Floor
 from src.entities.obstacle import Obstacle
+from src.utils.assets import Assets
 
 
 class GamePlay:
@@ -22,48 +30,25 @@ class GamePlay:
         self.score = 0
         self.bg1_x = 0
         self.bg2_x = WIN_WIDTH
-        self.score_font = pygame.font.SysFont(
-            FONT_NAME,
-            36,
-            bold=True
+        self.score_font = Assets.font(FONT_NAME,36,bold=True)
+
+        self.background1 = Assets.image(
+            "bg1.png",
+            WIN_WIDTH,
+            WIN_HEIGHT
         )
 
-        self.background1 = pygame.image.load(
-            "./assets/images/bg1.png"
-        ).convert_alpha()
-
-        self.background2 = pygame.image.load(
-            "./assets/images/bg2.png"
-        ).convert_alpha()
-
-        self.background1 = pygame.transform.scale(
-            self.background1,
-            (WIN_WIDTH, WIN_HEIGHT)
+        self.background2 = Assets.image(
+            "bg2.png",
+            WIN_WIDTH,
+            WIN_HEIGHT
         )
-
-        self.background2 = pygame.transform.scale(
-            self.background2,
-            (WIN_WIDTH, WIN_HEIGHT)
-        )
-        self.bg_x1 = 0
-        self.bg_x2 = WIN_WIDTH
-
         self.player = Player()
         self.floor = Floor()
+        self.obstacle_top = Obstacle(PIPE_START_X,0,"pipe_top.png")
+        self.obstacle_bottom = Obstacle(PIPE_START_X,0,"pipe_bottom.png")
 
-        self.obstacle_top = Obstacle(
-            PIPE_START_X,
-            0,
-            "./assets/images/pipe_top.png"
-        )
-
-        self.obstacle_bottom = Obstacle(
-            PIPE_START_X,
-            0,
-            "./assets/images/pipe_bottom.png"
-        )
-
-        # cria o primeiro obstáculo
+        # Posiciona o primeiro conjunto de obstáculos
         self.reset_obstacles()
 
     def update_background(self):
@@ -131,10 +116,7 @@ class GamePlay:
 
 
     def run(self):
-        pygame.mixer_music.load(
-            "./assets/sounds/gameplay.mp3"
-        )
-
+        Assets.music("gameplay.mp3")
         pygame.mixer_music.play(-1)
 
         while True:
@@ -159,10 +141,8 @@ class GamePlay:
 
             self.update_background()
             self.player.update()
-
             self.obstacle_top.update()
             self.obstacle_bottom.update()
-
             if self.obstacle_top.get_right() < 0:
                 self.reset_obstacles()
 
